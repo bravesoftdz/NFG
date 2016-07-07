@@ -2,13 +2,13 @@ program NFG;
 
 uses
   Vcl.Forms,
-  UPrincipal in 'UPrincipal.pas' {Form1};
+  UPrincipal in 'UPrincipal.pas' {FPrincipal};
 
 {$R *.res}
 
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TFPrincipal, FPrincipal);
   Application.Run;
 end.

@@ -5,10 +5,11 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.ComCtrls,
-  Vcl.StdCtrls, Vcl.Buttons, ACBrBase, ACBrECF, ACBrDevice, ACBrMail, INIFiles, DateUtils;
+  Vcl.StdCtrls, Vcl.Buttons, ACBrBase, ACBrECF, ACBrDevice, ACBrMail, INIFiles, DateUtils, mimemess,
+  System.ImageList, Vcl.ImgList, ACBrDownload;
 
 type
-  TForm1 = class(TForm)
+  TFPrincipal = class(TForm)
     PGCGeral: TPageControl;
     TabSheet1: TTabSheet;
     TabSheet2: TTabSheet;
@@ -16,7 +17,6 @@ type
     CBFabricanteModelo: TComboBox;
     Label2: TLabel;
     CBPorta: TComboBox;
-    BtnAtivarImpressora: TBitBtn;
     Label3: TLabel;
     DTPDataInicial: TDateTimePicker;
     Label4: TLabel;
@@ -35,28 +35,22 @@ type
     Label9: TLabel;
     Label11: TLabel;
     Label10: TLabel;
-    Label12: TLabel;
     cmbBaudRate: TComboBox;
     cmbDataBits: TComboBox;
     cmbParity: TComboBox;
     cmbStopBits: TComboBox;
     cmbHandShaking: TComboBox;
-    cmbPortaSerial: TComboBox;
     chHardFlow: TCheckBox;
     chSoftFlow: TCheckBox;
     ACBrMail: TACBrMail;
     lbStatusECF: TLabel;
     shpStatusECF: TShape;
     lbRZPendente: TLabel;
-    lbDataUltMovto_ECF: TLabel;
-    lbDataHora_ECF: TLabel;
     lbCOO: TLabel;
     lbCCF: TLabel;
     lbCRZ: TLabel;
     lbModeloECF: TLabel;
     lbNumSerie: TLabel;
-    lbPortaCOM: TLabel;
-    BtnSair: TBitBtn;
     Label13: TLabel;
     cbData: TComboBox;
     edtSmtpHost: TEdit;
@@ -76,6 +70,15 @@ type
     EdtNomeRemetente: TEdit;
     Label16: TLabel;
     EdtEmailDestinatario: TEdit;
+    PBotao: TPanel;
+    BtnSair: TBitBtn;
+    BtnAtivarImpressora: TBitBtn;
+    ACBrDownload: TACBrDownload;
+    ProgressBar1: TProgressBar;
+    Panel1: TPanel;
+    ImageList: TImageList;
+    Image1: TImage;
+    Label12: TLabel;
     procedure TimerTimer(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure chSoftFlowClick(Sender: TObject);
@@ -100,25 +103,26 @@ type
     Procedure GravarINI ;
     Procedure LerINI ;
     procedure EnviarEmail(Arquivo: String);
+    procedure MudarIcone(Tipo : Integer; Imagem: TImage);
   public
     { Public declarations }
   end;
 
 var
-  Form1: TForm1;
+  FPrincipal: TFPrincipal;
   Device : TACBrDevice ;
 
 implementation
 
 {$R *.dfm}
 
-procedure TForm1.BtnSairClick(Sender: TObject);
+procedure TFPrincipal.BtnSairClick(Sender: TObject);
 begin
   ACBrECF1.Desativar;
   Application.Terminate;
 end;
 
-procedure TForm1.BtnAtivarImpressoraClick(Sender: TObject);
+procedure TFPrincipal.BtnAtivarImpressoraClick(Sender: TObject);
 begin
   ACBrECF1.Desativar;
 
@@ -144,8 +148,6 @@ begin
        lbCOO.Caption:= 'COO: ' + ACBrECF1.NumCOO;
        lbCCF.Caption := 'CCF: ' + ACBrECF1.NumCCF;
        lbCRZ.Caption := 'CRZ: ' + ACBrECF1.NumCRZ;
-       lbDataHora_ECF.Caption := 'Data/Hora ECF: ' + FormatDateTime('dd/mm/yyyy hh:mm:ss', ACBrECF1.DataHora);
-       lbDataUltMovto_ECF.Caption := 'Data do Último Mov.: ' + FormatDateTime('dd/mm/yyyy hh:mm:ss', ACBrECF1.DataMovimento);
 
        if (ACBrECF1.Estado = estRequerZ) then
          lbRZPendente.Caption := 'Redução Z pendente: SIM'
@@ -155,7 +157,6 @@ begin
        lbStatusECF.Caption := 'ECF Online';
        lbModeloECF.Caption := 'Modelo: ' + ACBrECF1.ModeloStr;
        lbNumSerie.Caption := 'Núm. Série: ' + ACBrECF1.NumSerie;
-       lbPortaCOM.Caption:= 'Porta: ' + cbPorta.Text;
 
        GravarINI ;
        PGCGeral.ActivePageIndex := 0;
@@ -173,7 +174,7 @@ begin
   end ;
 end;
 
-procedure TForm1.BtnExportarNFGClick(Sender: TObject);
+procedure TFPrincipal.BtnExportarNFGClick(Sender: TObject);
 Var
   arquivoTXT: String;
 begin
@@ -197,7 +198,7 @@ begin
   EnviarEmail(arquivoTXT);
 end;
 
-procedure TForm1.CBFabricanteModeloChange(Sender: TObject);
+procedure TFPrincipal.CBFabricanteModeloChange(Sender: TObject);
 begin
   try
      ACBrECF1.Modelo := TACBrECFModelo( CBFabricanteModelo.ItemIndex ) ;
@@ -207,59 +208,60 @@ begin
   end ;
 end;
 
-procedure TForm1.CBPortaChange(Sender: TObject);
+procedure TFPrincipal.CBPortaChange(Sender: TObject);
 begin
   try
     ACBrECF1.Porta := cbPorta.Text ;
+    Device.Porta := cbPorta.Text ;
   finally
      cbPorta.Text := ACBrECF1.Porta ;
   end ;
 end;
 
-procedure TForm1.chHardFlowClick(Sender: TObject);
+procedure TFPrincipal.chHardFlowClick(Sender: TObject);
 begin
   Device.HardFlow := chHardFlow.Checked ;
   VerificaFlow ;
 end;
 
-procedure TForm1.chSoftFlowClick(Sender: TObject);
+procedure TFPrincipal.chSoftFlowClick(Sender: TObject);
 begin
   Device.SoftFlow := chSoftFlow.Checked ;
   VerificaFlow ;
 end;
 
-procedure TForm1.cmbBaudRateChange(Sender: TObject);
+procedure TFPrincipal.cmbBaudRateChange(Sender: TObject);
 begin
   Device.Baud := StrToInt(cmbBaudRate.Text) ;
 end;
 
-procedure TForm1.cmbDataBitsChange(Sender: TObject);
+procedure TFPrincipal.cmbDataBitsChange(Sender: TObject);
 begin
   Device.Data := StrToInt(cmbDataBits.Text) ;
 end;
 
-procedure TForm1.cmbHandShakingChange(Sender: TObject);
+procedure TFPrincipal.cmbHandShakingChange(Sender: TObject);
 begin
   Device.HandShake := TACBrHandShake( cmbHandShaking.ItemIndex ) ;
   VerificaFlow ;
 end;
 
-procedure TForm1.cmbParityChange(Sender: TObject);
+procedure TFPrincipal.cmbParityChange(Sender: TObject);
 begin
   Device.Parity := TACBrSerialParity( cmbParity.ItemIndex ) ;
 end;
 
-procedure TForm1.cmbPortaSerialChange(Sender: TObject);
+procedure TFPrincipal.cmbPortaSerialChange(Sender: TObject);
 begin
-  Device.Porta := cmbPortaSerial.Text ;
+  Device.Porta := CBPorta.Text ;
 end;
 
-procedure TForm1.cmbStopBitsChange(Sender: TObject);
+procedure TFPrincipal.cmbStopBitsChange(Sender: TObject);
 begin
   Device.Stop := TACBrSerialStop( cmbStopBits.ItemIndex ) ;
 end;
 
-procedure TForm1.EnviarEmail(Arquivo: String);
+procedure TFPrincipal.EnviarEmail(Arquivo: String);
 begin
   Try
     With ACBrMail do
@@ -275,19 +277,26 @@ begin
       UseThread:=True;
       From:= edtSmtpUser.Text;
       Subject:= edtEmailAssunto.Text;
-      Body.Add(Trim(mmEmailMsg.Text));
+      AltBody.Assign(mmEmailMsg.Lines);
       FromName:= edtSmtpUser.Text;
+      Priority := MP_high;
+      AddAddress(EdtEmailDestinatario.Text, '');
+      ReadingConfirmation:= True;
+      AddAttachment(Arquivo, ExtractFileName(Arquivo));
 
       Send(False);
-
+      ShowMessage('Email enviado com sucesso.');
     End;
-  Finally
-    ACBrMail.Clear;
-  End;
+  except on E: Exception do
+    begin
+      Raise Exception.Create(PChar('Ocorreu o seguinte erro ao tentar salvar os dados.' + #13 + E.Message));
+    end;
+  end;
 
+  ACBrMail.Clear;
 end;
 
-procedure TForm1.cbDataChange(Sender: TObject);
+procedure TFPrincipal.cbDataChange(Sender: TObject);
 begin
   DTPDataInicial.Enabled:=False;
   DTPDataFinal.Enabled:=False;
@@ -305,12 +314,12 @@ begin
   end;
 end;
 
-procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
+procedure TFPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Device:= nil;
 end;
 
-procedure TForm1.FormCreate(Sender: TObject);
+procedure TFPrincipal.FormCreate(Sender: TObject);
 begin
   AnoCorrente:= StrToInt(FormatDateTime('yyyy', now));
   CBPorta.Items.Clear;
@@ -323,9 +332,11 @@ begin
   cbDataChange(nil);
   LerINI;
   BtnAtivarImpressoraClick(nil);
+
+  ImageList.GetBitmap(1, Image1.Picture.Bitmap);
 end;
 
-procedure TForm1.GravarINI;
+procedure TFPrincipal.GravarINI;
 Var
   ArqINI : String ;
   INI : TIniFile ;
@@ -339,7 +350,6 @@ begin
      INI.WriteString('ECF','RazaoSocial',EdtRazaoSocial.Text);
      INI.WriteString('ECF','Endereco',EdtEndereco.Text);
      INI.WriteString('ECF','SerialParams',ACBrECF1.Device.ParamsString);
-     INI.WriteString('ECF','Operador',ACBrECF1.Operador);
 
      INI.WriteString('EMAIL','SMTP',edtSmtpHost.Text);
      INI.WriteString('EMAIL','Porta',edtSmtpPort.Text);
@@ -357,7 +367,7 @@ begin
 
 end;
 
-procedure TForm1.LerINI;
+procedure TFPrincipal.LerINI;
 Var
   ArqINI : String ;
   INI : TIniFile ;
@@ -370,6 +380,7 @@ begin
      CBFabricanteModelo.ItemIndex := INI.ReadInteger('ECF','Modelo',CBFabricanteModelo.ItemIndex);
      CBFabricanteModeloChange(nil);
      cbPorta.Text := INI.ReadString('ECF','Porta',cbPorta.Text);
+     CBPortaChange(nil);
      EdtRazaoSocial.Text:= INI.ReadString('ECF','RazaoSocial',EdtRazaoSocial.Text);
      EdtEndereco.Text:= INI.ReadString('ECF','Endereco',EdtEndereco.Text);
      ACBrECF1.Device.ParamsString := INI.ReadString('ECF','SerialParams','');
@@ -398,15 +409,20 @@ begin
 
 end;
 
-procedure TForm1.TimerTimer(Sender: TObject);
+procedure TFPrincipal.MudarIcone(Tipo: Integer; Imagem: TImage);
 begin
-  {if (ImgDownload.Picture = nil) then
-    ImgDownload.Picture.LoadFromFile('Teste.jpg')
-  else
-    ImgDownload.Picture:= nil;  }
+  ImageList.GetBitmap(Tipo, Imagem.Picture.Bitmap);
 end;
 
-procedure TForm1.VerificaFlow;
+procedure TFPrincipal.TimerTimer(Sender: TObject);
+begin
+  if (Image1.Picture.Bitmap.Empty) then
+    ImageList.GetBitmap(1, Image1.Picture.Bitmap)
+  else
+    Image1.Picture.Bitmap:= nil;
+end;
+
+procedure TFPrincipal.VerificaFlow;
 begin
   cmbHandShaking.ItemIndex := Integer( Device.HandShake ) ;
   chHardFlow.Checked := Device.HardFlow ;

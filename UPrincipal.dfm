@@ -1,9 +1,9 @@
-object Form1: TForm1
+object FPrincipal: TFPrincipal
   Left = 0
   Top = 0
   BorderIcons = []
-  Caption = 'Form1'
-  ClientHeight = 501
+  Caption = 'Exporta'#231#227'o de Nota Fiscal Ga'#250'cha'
+  ClientHeight = 472
   ClientWidth = 485
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -20,7 +20,7 @@ object Form1: TForm1
     Left = 8
     Top = 55
     Width = 473
-    Height = 410
+    Height = 366
     ActivePage = TabSheet1
     TabOrder = 0
     object TabSheet1: TTabSheet
@@ -41,7 +41,7 @@ object Form1: TForm1
       end
       object lbStatusECF: TLabel
         Left = 71
-        Top = 282
+        Top = 146
         Width = 113
         Height = 29
         Caption = 'ECF offline'
@@ -54,15 +54,15 @@ object Form1: TForm1
       end
       object shpStatusECF: TShape
         Left = 3
-        Top = 274
+        Top = 138
         Width = 62
         Height = 47
         Brush.Color = clRed
         Shape = stCircle
       end
       object lbRZPendente: TLabel
-        Left = 3
-        Top = 238
+        Left = 187
+        Top = 114
         Width = 120
         Height = 14
         Caption = 'Redu'#231#227'o-Z pendente:'
@@ -73,37 +73,9 @@ object Form1: TForm1
         Font.Style = []
         ParentFont = False
       end
-      object lbDataUltMovto_ECF: TLabel
-        Left = 3
-        Top = 100
-        Width = 149
-        Height = 14
-        Caption = 'Data do ultimo movimento:'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -12
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-      end
-      object lbDataHora_ECF: TLabel
-        Left = 3
-        Top = 78
-        Width = 131
-        Height = 14
-        Caption = 'Data/Hora atual do ECF:'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -12
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-        ParentShowHint = False
-        ShowHint = False
-      end
       object lbCOO: TLabel
         Left = 3
-        Top = 120
+        Top = 72
         Width = 29
         Height = 14
         Hint = 'Contador de Ordem de Opera'#231#227'o'
@@ -119,7 +91,7 @@ object Form1: TForm1
       end
       object lbCCF: TLabel
         Left = 3
-        Top = 142
+        Top = 94
         Width = 24
         Height = 14
         Hint = 'Contador de Cupom Fiscal'
@@ -135,7 +107,7 @@ object Form1: TForm1
       end
       object lbCRZ: TLabel
         Left = 3
-        Top = 162
+        Top = 114
         Width = 25
         Height = 14
         Hint = 'Contador de Redu'#231#245'es-Z'
@@ -150,8 +122,8 @@ object Form1: TForm1
         ShowHint = False
       end
       object lbModeloECF: TLabel
-        Left = 3
-        Top = 179
+        Left = 187
+        Top = 75
         Width = 85
         Height = 14
         Caption = 'Modelo do ECF:'
@@ -163,24 +135,11 @@ object Form1: TForm1
         ParentFont = False
       end
       object lbNumSerie: TLabel
-        Left = 3
-        Top = 198
+        Left = 187
+        Top = 94
         Width = 96
         Height = 14
         Caption = 'N'#250'mero de S'#233'rie:'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -12
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-      end
-      object lbPortaCOM: TLabel
-        Left = 3
-        Top = 219
-        Width = 62
-        Height = 14
-        Caption = 'Porta COM:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -12
@@ -194,6 +153,19 @@ object Form1: TForm1
         Width = 57
         Height = 13
         Caption = 'Data Inicial:'
+      end
+      object Image1: TImage
+        Left = 3
+        Top = 213
+        Width = 22
+        Height = 21
+      end
+      object Label12: TLabel
+        Left = 30
+        Top = 216
+        Width = 72
+        Height = 13
+        Caption = 'Download DLLs'
       end
       object DTPDataInicial: TDateTimePicker
         Left = 79
@@ -247,6 +219,18 @@ object Form1: TForm1
           'Novembro'
           'Dezembro')
       end
+      object Panel1: TPanel
+        Left = 0
+        Top = 191
+        Width = 464
+        Height = 18
+        BevelOuter = bvNone
+        BorderStyle = bsSingle
+        Caption = 'Status da Exporta'#231#227'o'
+        Ctl3D = False
+        ParentCtl3D = False
+        TabOrder = 4
+      end
     end
     object TabSheet2: TTabSheet
       Caption = 'Configura'#231#227'o'
@@ -274,28 +258,28 @@ object Form1: TForm1
       end
       object Label6: TLabel
         Left = 43
-        Top = 64
+        Top = 62
         Width = 49
         Height = 13
         Caption = 'Endere'#231'o:'
       end
       object Label141: TLabel
         Left = 224
-        Top = 109
+        Top = 110
         Width = 30
         Height = 13
         Caption = 'Senha'
       end
       object Label140: TLabel
         Left = 63
-        Top = 109
+        Top = 110
         Width = 36
         Height = 13
         Caption = 'Usu'#225'rio'
       end
       object Label138: TLabel
         Left = 67
-        Top = 87
+        Top = 86
         Width = 26
         Height = 13
         Caption = 'SMTP'
@@ -316,7 +300,7 @@ object Form1: TForm1
       end
       object Label14: TLabel
         Left = 369
-        Top = 85
+        Top = 86
         Width = 30
         Height = 13
         Caption = 'Porta:'
@@ -362,42 +346,32 @@ object Form1: TForm1
         Top = 8
         Width = 93
         Height = 21
-        Style = csDropDownList
         TabOrder = 1
         OnChange = CBPortaChange
-      end
-      object BtnAtivarImpressora: TBitBtn
-        Left = 226
-        Top = 356
-        Width = 231
-        Height = 25
-        Caption = 'Ativar Impressora e Salvar Configura'#231#227'o'
-        TabOrder = 2
-        OnClick = BtnAtivarImpressoraClick
       end
       object EdtRazaoSocial: TEdit
         Left = 103
         Top = 34
         Width = 353
         Height = 21
-        TabOrder = 3
+        TabOrder = 2
       end
       object EdtEndereco: TEdit
         Left = 103
-        Top = 61
+        Top = 59
         Width = 353
         Height = 21
-        TabOrder = 4
+        TabOrder = 3
       end
       object GroupBox1: TGroupBox
         Left = 3
         Top = 233
         Width = 454
-        Height = 120
+        Height = 104
         Caption = 'Configura'#231#245'es Avan'#231'adas (Utilize somente se tiver certeza)'
-        TabOrder = 5
+        TabOrder = 4
         object Label7: TLabel
-          Left = 150
+          Left = 5
           Top = 17
           Width = 139
           Height = 13
@@ -405,7 +379,7 @@ object Form1: TForm1
           FocusControl = cmbBaudRate
         end
         object Label8: TLabel
-          Left = 295
+          Left = 150
           Top = 18
           Width = 119
           Height = 13
@@ -413,15 +387,15 @@ object Form1: TForm1
           FocusControl = cmbDataBits
         end
         object Label9: TLabel
-          Left = 5
-          Top = 58
+          Left = 295
+          Top = 17
           Width = 81
           Height = 13
           Caption = '&Parity (Paridade)'
           FocusControl = cmbParity
         end
         object Label11: TLabel
-          Left = 150
+          Left = 5
           Top = 57
           Width = 122
           Height = 13
@@ -429,23 +403,15 @@ object Form1: TForm1
           FocusControl = cmbStopBits
         end
         object Label10: TLabel
-          Left = 295
+          Left = 150
           Top = 57
           Width = 157
           Height = 13
           Caption = '&Handshaking (Controle de Fluxo)'
           FocusControl = cmbHandShaking
         end
-        object Label12: TLabel
-          Left = 5
-          Top = 19
-          Width = 55
-          Height = 13
-          Caption = '&Porta Serial'
-          FocusControl = cmbPortaSerial
-        end
         object cmbBaudRate: TComboBox
-          Left = 150
+          Left = 5
           Top = 35
           Width = 139
           Height = 21
@@ -468,7 +434,7 @@ object Form1: TForm1
             '115200')
         end
         object cmbDataBits: TComboBox
-          Left = 295
+          Left = 150
           Top = 34
           Width = 139
           Height = 21
@@ -484,8 +450,8 @@ object Form1: TForm1
             '8')
         end
         object cmbParity: TComboBox
-          Left = 5
-          Top = 75
+          Left = 295
+          Top = 34
           Width = 139
           Height = 21
           Style = csDropDownList
@@ -501,7 +467,7 @@ object Form1: TForm1
             'Space')
         end
         object cmbStopBits: TComboBox
-          Left = 150
+          Left = 5
           Top = 75
           Width = 139
           Height = 21
@@ -516,7 +482,7 @@ object Form1: TForm1
             '2')
         end
         object cmbHandShaking: TComboBox
-          Left = 295
+          Left = 150
           Top = 75
           Width = 139
           Height = 21
@@ -531,88 +497,68 @@ object Form1: TForm1
             'RTS/CTS'
             'DTR/DSR')
         end
-        object cmbPortaSerial: TComboBox
-          Left = 5
-          Top = 35
-          Width = 139
-          Height = 21
-          DropDownCount = 10
-          TabOrder = 5
-          Text = 'COM1'
-          OnChange = cmbPortaSerialChange
-          Items.Strings = (
-            'COM1'
-            'COM2'
-            'COM3'
-            'COM4'
-            'COM5'
-            'COM6'
-            'COM7'
-            'COM8'
-            'COM9')
-        end
         object chHardFlow: TCheckBox
-          Left = 5
-          Top = 98
-          Width = 89
+          Left = 309
+          Top = 76
+          Width = 66
           Height = 17
           Caption = 'HardFlow'
-          TabOrder = 6
+          TabOrder = 5
           OnClick = chHardFlowClick
         end
         object chSoftFlow: TCheckBox
-          Left = 93
-          Top = 98
-          Width = 81
+          Left = 378
+          Top = 76
+          Width = 61
           Height = 17
           Caption = 'SoftFlow'
-          TabOrder = 7
+          TabOrder = 6
           OnClick = chSoftFlowClick
         end
       end
       object edtSmtpHost: TEdit
         Left = 103
-        Top = 85
+        Top = 83
         Width = 257
+        Height = 21
+        Color = clWhite
+        MaxLength = 60
+        TabOrder = 5
+      end
+      object edtSmtpUser: TEdit
+        Left = 103
+        Top = 108
+        Width = 115
         Height = 21
         Color = clWhite
         MaxLength = 60
         TabOrder = 6
       end
-      object edtSmtpUser: TEdit
-        Left = 103
-        Top = 107
-        Width = 115
+      object edtSmtpPass: TEdit
+        Left = 259
+        Top = 108
+        Width = 101
         Height = 21
         Color = clWhite
         MaxLength = 60
         TabOrder = 7
       end
-      object edtSmtpPass: TEdit
-        Left = 259
-        Top = 107
-        Width = 101
+      object edtSmtpPort: TEdit
+        Left = 403
+        Top = 83
+        Width = 51
         Height = 21
         Color = clWhite
         MaxLength = 60
         TabOrder = 8
       end
-      object edtSmtpPort: TEdit
-        Left = 403
-        Top = 85
-        Width = 51
-        Height = 21
-        Color = clWhite
-        MaxLength = 60
-        TabOrder = 9
-      end
       object cbEmailSSL: TCheckBox
         Left = 365
-        Top = 104
+        Top = 105
         Width = 93
         Height = 30
         Caption = 'SMTP exige conex'#227'o segura'
-        TabOrder = 10
+        TabOrder = 9
         WordWrap = True
       end
       object edtEmailAssunto: TEdit
@@ -622,7 +568,7 @@ object Form1: TForm1
         Height = 21
         Color = clWhite
         MaxLength = 50
-        TabOrder = 11
+        TabOrder = 10
       end
       object mmEmailMsg: TMemo
         Left = 103
@@ -632,7 +578,7 @@ object Form1: TForm1
         Color = clWhite
         MaxLength = 1024
         ScrollBars = ssVertical
-        TabOrder = 12
+        TabOrder = 11
       end
       object EdtNomeRemetente: TEdit
         Left = 103
@@ -641,7 +587,7 @@ object Form1: TForm1
         Height = 21
         Color = clWhite
         MaxLength = 60
-        TabOrder = 13
+        TabOrder = 12
       end
       object EdtEmailDestinatario: TEdit
         Left = 322
@@ -650,7 +596,7 @@ object Form1: TForm1
         Height = 21
         Color = clWhite
         MaxLength = 60
-        TabOrder = 14
+        TabOrder = 13
       end
     end
   end
@@ -677,16 +623,44 @@ object Form1: TForm1
     ParentFont = False
     TabOrder = 1
   end
-  object BtnSair: TBitBtn
-    Left = 382
-    Top = 467
-    Width = 96
-    Height = 27
-    Caption = 'Sair'
+  object PBotao: TPanel
+    Left = 8
+    Top = 424
+    Width = 469
+    Height = 41
+    BevelOuter = bvNone
+    BorderStyle = bsSingle
+    Ctl3D = False
+    ParentCtl3D = False
     TabOrder = 2
-    OnClick = BtnSairClick
+    object BtnSair: TBitBtn
+      Left = 363
+      Top = 4
+      Width = 96
+      Height = 27
+      Caption = 'Sair'
+      TabOrder = 0
+      OnClick = BtnSairClick
+    end
+    object BtnAtivarImpressora: TBitBtn
+      Left = 126
+      Top = 4
+      Width = 231
+      Height = 27
+      Caption = 'Ativar Impressora e Salvar Configura'#231#227'o'
+      TabOrder = 1
+      OnClick = BtnAtivarImpressoraClick
+    end
+  end
+  object ProgressBar1: TProgressBar
+    Left = 8
+    Top = 403
+    Width = 470
+    Height = 17
+    TabOrder = 3
   end
   object Timer: TTimer
+    Interval = 500
     OnTimer = TimerTimer
     Left = 20
     Top = 15
@@ -754,5 +728,153 @@ object Form1: TForm1
     IDECharset = CP1252
     Left = 332
     Top = 7
+  end
+  object ACBrDownload: TACBrDownload
+    SizeRecvBuffer = 0
+    Left = 264
+    Top = 14
+  end
+  object ImageList: TImageList
+    Left = 180
+    Top = 7
+    Bitmap = {
+      494C010103000800300010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      0000000000003600000028000000400000001000000001002000000000000010
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000404
+      68B44C4CDFFF0000040600000000000000000000000000000000000000000000
+      57856161E7FF0000111900000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00000000000000000000E5B72BFFDBAC37F60000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000000000000000000005055AA02727
+      FCFF0000EDFF4242ECFF0000050800000000000000000000000000004E7B4B4B
+      F6FF4343EFFF9090F7FF0000121B000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000E6B728FFE4B114FFE5B31BFFDCAE3BF600000000000000000000
+      0000000000000000000000000000000000000000000000000000000000020000
+      00070000000C000000120000002607AE4DFF0000001A000000100000000C0000
+      00080000000400000002000000010000000000000000000000004444FFFF0000
+      F5FF0000EDFF0000E6FF2C2CEFFF000004060000000002024C7B3131F0FF3232
+      E7FF4343EFFF5353F6FF8F8FEAFF000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000E9BB31FFE6B51EFFE6B41AFFE6B41BFFE7B826FFDEB141F6000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000DB654FF19C561FF0000000000000000000000000000
+      000000000000000000000000000000000000000000000000000012128AF50101
+      F6FF0000EDFF0000E6FF0000DDFF1414EBFF060661A21A1AEDFF2222E0FF3232
+      E7FF4343EFFF8080FFFF00005785000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000000000000000000000000000EBC0
+      3CFFE9BA29FFE9BA28FFEABB2BFFE9BA29FFE9B927FFEABD31FFE1B348F60000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000DBF58FF0DC159FF0DC159FF0DC058FF00000000000000000000
+      0000000000000000000000000000000000000000000000000000000000001111
+      8DFB0101EEFF0000E6FF0000DDFF0000D6FF0202E5FF1212D8FF2222E0FF3232
+      E7FF6363FAFF00004F7B00000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000EEC548FFECC0
+      36FFECC035FFEEC443FF00000000EDC44AFFEDC138FFECBF34FFEDC23EFFE3B8
+      50F6000000000000000000000000000000000000000000000000000000000004
+      02060CC058FF0CC158FF0CC058FF000000000CC158FF0CBF57FF000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00000F0F87F60000E5FF0000DDFF0000D6FF0202CFFF1212D8FF2222E0FF4D4D
+      F6FF01014C7B0000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00000000000000000000000000000000000000000000EFCA63FFF0C74BFFEFC5
+      42FFF0C950FF000000000000000000000000F0C957FFEFC645FFEFC542FFF0C8
+      4BFFE5BC58F60000000000000000000000000000000000000000000000000000
+      000003A246FF1FC666FF000000000000000019C361FF22C768FF0FB756FF0000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00000000000011118DFF0000DEFF7373FFFF7777FFFF6F6FFDFF3030EFFF0404
+      62A3000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000F1CB65FFF4D0
+      62FF0000000000000000000000000000000000000000F3CE62FFF2CB52FFF2CA
+      4FFFF3CD57FFE8C060F600000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000050D388FF53D48BFF33CA
+      73FF000000000000000000000000000000000000000000000000000000000000
+      00000909427B1B1BF4FF8F8FFFFF8B8BFFFF8B8BFFFF8B8BFFFF8C8CFFFF5050
+      ECFF000004060000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000F5D26DFFF5D0
+      5FFFF5D05CFFF6D263FFE9C467F6000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000011AE53FF77DDA3FF77DD
+      A3FF51D288FF0000000000000000000000000000000000000000000000000B0B
+      4A8E2222F8FFA6A6FFFFA2A2FFFFA8A8FFFF1414D4FFA2A2FFFFA2A2FFFFA2A2
+      FEFF7070F0FF0000040600000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000000000000000000000000000F8D7
+      76FFF8D56AFFF8D567FFF9D872FFEDCC76F60000000000000000000000000000
+      00000000000000000000000000000000000000000000000000004FD086FF82DF
+      ABFF39C977FF00000000000000000000000000000000000000000B0B3E7B2D2D
+      FEFFBFBFFFFFB8B8FFFFBEBEFFFF0101EAFF12128DFF2525DCFFB8B8FFFFB8B8
+      FFFFBABAFFFF8585EDFF00000406000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000FADA7FFFFADB78FFFADC82FF000000000000000000000000000000000000
+      00000000000000000000000000000000000000000000000000000000000052D1
+      88FF001B0B2D00000000000000000000000000000000000000004D4DFFFFD7D7
+      FFFFD1D1FFFFD9D9FFFF0808EEFF0A0A427B00000000101087F53636E3FFD0D0
+      FFFFD1D1FFFFD5D5FFFF8989E0FF000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000F9D986FF00000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000292987FF4343
+      F8FFEFEFFFFF1313F4FF0C0C4A8E00000000000000000000000011118CF95151
+      ECFFEAEAFFFF6868FDFF020268B4000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000002727
+      87FF2C2CFEFF0C0C3E7B00000000000000000000000000000000000000001111
+      8AF55B5BFBFF05055AA000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000424D3E000000000000003E000000
+      2800000040000000100000000100010000000000800000000000000000000000
+      000000000000000000000000FFFFFF0000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000}
   end
 end
