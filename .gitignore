@@ -2,3 +2,11 @@
 *.ini
 *.~1~
 *.~2~
+*.local
+NFG.identcache
+*.stat
+Teste/bin/DR0209BR000000170711.idx
+*.dat
+Teste/DarumaFrameWork.xml
+*.~22~
+*.~24~

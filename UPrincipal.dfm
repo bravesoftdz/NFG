@@ -3,8 +3,8 @@ object FPrincipal: TFPrincipal
   Top = 0
   BorderIcons = []
   Caption = 'Exporta'#231#227'o de Nota Fiscal Ga'#250'cha'
-  ClientHeight = 472
-  ClientWidth = 485
+  ClientHeight = 471
+  ClientWidth = 484
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -21,7 +21,7 @@ object FPrincipal: TFPrincipal
     Top = 55
     Width = 473
     Height = 366
-    ActivePage = TabSheet1
+    ActivePage = TabSheet2
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'Exporta'#231#227'o de NFG'
@@ -154,18 +154,18 @@ object FPrincipal: TFPrincipal
         Height = 13
         Caption = 'Data Inicial:'
       end
-      object Image1: TImage
+      object lConnectionInfo: TLabel
         Left = 3
-        Top = 213
-        Width = 22
-        Height = 21
-      end
-      object Label12: TLabel
-        Left = 30
-        Top = 216
-        Width = 72
-        Height = 13
-        Caption = 'Download DLLs'
+        Top = 314
+        Width = 119
+        Height = 18
+        Caption = 'lConnectionInfo'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlue
+        Font.Height = -15
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
       end
       object DTPDataInicial: TDateTimePicker
         Left = 79
@@ -218,18 +218,6 @@ object FPrincipal: TFPrincipal
           'Outubro'
           'Novembro'
           'Dezembro')
-      end
-      object Panel1: TPanel
-        Left = 0
-        Top = 191
-        Width = 464
-        Height = 18
-        BevelOuter = bvNone
-        BorderStyle = bsSingle
-        Caption = 'Status da Exporta'#231#227'o'
-        Ctl3D = False
-        ParentCtl3D = False
-        TabOrder = 4
       end
     end
     object TabSheet2: TTabSheet
@@ -541,6 +529,7 @@ object FPrincipal: TFPrincipal
         Height = 21
         Color = clWhite
         MaxLength = 60
+        PasswordChar = '#'
         TabOrder = 7
       end
       object edtSmtpPort: TEdit
@@ -652,19 +641,6 @@ object FPrincipal: TFPrincipal
       OnClick = BtnAtivarImpressoraClick
     end
   end
-  object ProgressBar1: TProgressBar
-    Left = 8
-    Top = 403
-    Width = 470
-    Height = 17
-    TabOrder = 3
-  end
-  object Timer: TTimer
-    Interval = 500
-    OnTimer = TimerTimer
-    Left = 20
-    Top = 15
-  end
   object ACBrECF1: TACBrECF
     QuebraLinhaRodape = False
     Porta = 'COM1'
@@ -731,6 +707,7 @@ object FPrincipal: TFPrincipal
   end
   object ACBrDownload: TACBrDownload
     SizeRecvBuffer = 0
+    OnHookMonitor = ACBrDownloadHookMonitor
     Left = 264
     Top = 14
   end
@@ -738,7 +715,7 @@ object FPrincipal: TFPrincipal
     Left = 180
     Top = 7
     Bitmap = {
-      494C010103000800300010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010103000800380010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.ComCtrls,
   Vcl.StdCtrls, Vcl.Buttons, ACBrBase, ACBrECF, ACBrDevice, ACBrMail, INIFiles, DateUtils, mimemess,
-  System.ImageList, Vcl.ImgList, ACBrDownload;
+  System.ImageList, Vcl.ImgList, ACBrDownload, blcksock;
 
 type
   TFPrincipal = class(TForm)
@@ -22,7 +22,6 @@ type
     Label4: TLabel;
     DTPDataFinal: TDateTimePicker;
     PTitulo: TPanel;
-    Timer: TTimer;
     BtnExportarNFG: TBitBtn;
     ACBrECF1: TACBrECF;
     EdtRazaoSocial: TEdit;
@@ -74,12 +73,8 @@ type
     BtnSair: TBitBtn;
     BtnAtivarImpressora: TBitBtn;
     ACBrDownload: TACBrDownload;
-    ProgressBar1: TProgressBar;
-    Panel1: TPanel;
     ImageList: TImageList;
-    Image1: TImage;
-    Label12: TLabel;
-    procedure TimerTimer(Sender: TObject);
+    lConnectionInfo: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure chSoftFlowClick(Sender: TObject);
     procedure chHardFlowClick(Sender: TObject);
@@ -96,6 +91,9 @@ type
     procedure CBPortaChange(Sender: TObject);
     procedure BtnExportarNFGClick(Sender: TObject);
     procedure cbDataChange(Sender: TObject);
+    procedure ACBrDownloadHookMonitor(Sender: TObject; const BytesToDownload,
+      BytesDownloaded: Integer; const AverageSpeed: Double; const Hour, Min,
+      Sec: Word);
   private
     AnoCorrente: Integer;
     CaminhoSistema: String;
@@ -104,6 +102,7 @@ type
     Procedure LerINI ;
     procedure EnviarEmail(Arquivo: String);
     procedure MudarIcone(Tipo : Integer; Imagem: TImage);
+    function TrocaCaracter(Texto: String; Caracter: String): String;
   public
     { Public declarations }
   end;
@@ -120,6 +119,19 @@ procedure TFPrincipal.BtnSairClick(Sender: TObject);
 begin
   ACBrECF1.Desativar;
   Application.Terminate;
+end;
+
+procedure TFPrincipal.ACBrDownloadHookMonitor(Sender: TObject;
+  const BytesToDownload, BytesDownloaded: Integer; const AverageSpeed: Double;
+  const Hour, Min, Sec: Word);
+var
+  sConnectionInfo: string;
+begin
+  sConnectionInfo := sConnectionInfo + '  -  ' + Format('%.2d:%.2d:%.2d', [Sec div 3600, (Sec div 60) mod 60, Sec mod 60]);
+  sConnectionInfo := FormatFloat('0.00 KB/s'  , AverageSpeed) + sConnectionInfo;
+  sConnectionInfo := FormatFloat('###,###,##0', BytesDownloaded / 1024) + ' / ' + FormatFloat('###,###,##0', BytesToDownload / 1024) +' KB  -  ' + sConnectionInfo;
+
+  lConnectionInfo.Caption := sConnectionInfo;
 end;
 
 procedure TFPrincipal.BtnAtivarImpressoraClick(Sender: TObject);
@@ -184,10 +196,12 @@ begin
 
   if (cbData.ItemIndex = 0) then
     arquivoTXT:= arquivoTXT + FormatDateTime('dd-mm-yyyy', DTPDataInicial.Date) + '_'
-      + FormatDateTime('dd-mm-yyyy', DTPDataFinal.Date) + '.txt'
+      + FormatDateTime('dd-mm-yyyy', DTPDataFinal.Date) + '_' + Copy(TrocaCaracter(EdtRazaoSocial.Text, ' '), 1, 20) + '.txt'
   else
-    arquivoTXT:= arquivoTXT + UpperCase(cbData.Text) + '_' + IntToStr(AnoCorrente) + '.txt';
+    arquivoTXT:= arquivoTXT + UpperCase(cbData.Text) + '_' + IntToStr(AnoCorrente) + '_' + Copy(TrocaCaracter(EdtRazaoSocial.Text, ' '), 1, 20) + '.txt';
 
+  lConnectionInfo.Caption:= 'Aguarde gerando arquivo...';
+  Application.ProcessMessages;
   ACBrECF1.PafMF_MFD_Cotepe1704(DTPDataInicial.Date, DTPDataFinal.Date, arquivoTXT);
 
   ShowMessage('Arquivo Gerado com Sucesso!!!');
@@ -195,6 +209,8 @@ begin
   if (Application.MessageBox('Deseja enviar o arquivo gerado por email?', 'Enviar por E-mail', MB_ICONQUESTION + MB_YESNO) = 7) then
     Exit;
 
+  lConnectionInfo.Caption:= 'Enviando E-mail...';
+  Application.ProcessMessages;
   EnviarEmail(arquivoTXT);
 end;
 
@@ -286,6 +302,7 @@ begin
 
       Send(False);
       ShowMessage('Email enviado com sucesso.');
+      lConnectionInfo.Caption:= '';
     End;
   except on E: Exception do
     begin
@@ -294,6 +311,7 @@ begin
   end;
 
   ACBrMail.Clear;
+  lConnectionInfo.Caption:= '';
 end;
 
 procedure TFPrincipal.cbDataChange(Sender: TObject);
@@ -321,6 +339,7 @@ end;
 
 procedure TFPrincipal.FormCreate(Sender: TObject);
 begin
+  lConnectionInfo.Caption:= '';
   AnoCorrente:= StrToInt(FormatDateTime('yyyy', now));
   CBPorta.Items.Clear;
   CBPorta.Items.Add('Procurar');
@@ -332,8 +351,6 @@ begin
   cbDataChange(nil);
   LerINI;
   BtnAtivarImpressoraClick(nil);
-
-  ImageList.GetBitmap(1, Image1.Picture.Bitmap);
 end;
 
 procedure TFPrincipal.GravarINI;
@@ -414,12 +431,22 @@ begin
   ImageList.GetBitmap(Tipo, Imagem.Picture.Bitmap);
 end;
 
-procedure TFPrincipal.TimerTimer(Sender: TObject);
+function TFPrincipal.TrocaCaracter(Texto, Caracter: String): String;
+var
+  y: string;
+  i: integer;
 begin
-  if (Image1.Picture.Bitmap.Empty) then
-    ImageList.GetBitmap(1, Image1.Picture.Bitmap)
-  else
-    Image1.Picture.Bitmap:= nil;
+  y:= '';
+
+  for i:= 1 to length(Texto) do
+  begin
+    if (Texto[i] = Caracter) then
+      y:= Y + '_'
+    else
+      y:= y + Texto[i];
+  end;
+
+  result:= Y;
 end;
 
 procedure TFPrincipal.VerificaFlow;
